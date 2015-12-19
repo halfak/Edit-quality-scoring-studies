@@ -22,7 +22,7 @@ import requests
 import mysqltsv
 
 logger = logging.getLogger(__name__)
-
+logging.getLogger('requests.packages.urllib3.connectionpool').setLevel(logging.WARNING)
 
 def main():
     args = docopt.docopt(__doc__)
@@ -51,6 +51,8 @@ def run(ores_url, context, models, revs):
         rev_scores = get_scores(ores_url, context, models, batch)
 
         for rev, scores in zip(batch, rev_scores):
+            sys.stderr.write(".")
+            sys.stderr.flush()
             writer.write(list(rev.values()) + scores)
 
         batch = list(islice(revs, 50))
