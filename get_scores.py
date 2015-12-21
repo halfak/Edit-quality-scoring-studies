@@ -86,8 +86,8 @@ def read_scores(rev_id, rev_scores_doc, models):
         if 'error' in rev_scores_doc[model]:
             logger.warn("Could not get scores for {0}{1}"
                         .format(model, rev_id))
-            logger.warn(rev_scores_doc[model]['type'] + ": " +
-                        rev_scores_doc[model]['message'])
+            logger.warn("{0}: {1}".format(rev_scores_doc[model].get('type'),
+                                          rev_scores_doc[model].get('message')))
             yield None
         else:
             yield rev_scores_doc[model]['probability']['true']
